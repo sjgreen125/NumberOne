@@ -57,6 +57,8 @@ def Turing(mName,s,buff):
    for letter in s:
       try:
          key = (state1, letter)
+      except KeyError:
+         print("!")
          
          
          
