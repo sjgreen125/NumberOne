@@ -1,7 +1,7 @@
 #Stephen Green
 #Foundations of CS
 #1/30/17
-#Go to Github
+
 
 def readMachine(fname):
    inFile = open(fname, "r")
