@@ -43,22 +43,69 @@ def FSM(mName,s):
 def Turing(mName,s,buff):
    turingDict ={}
    inFile = open(mName, "r")
-   initial = next(inFile).strip()
-   final = next(inFile).strip()
-
+   initial = ""
+   final = ""
+   itemList = []
+   typeList = []
+   count = 0
    for line in inFile:
       line = line.strip()
-      line = line.split(",")
       state1 = line[0]
       inputt = line[1]
-      state2 = line[3]
-      finalinput = line[4]
-      direction = line[5]
+      if count == 0:
+         initial = line.strip("\n")
+
+      if count == 1:
+         final = line.strip("\n")
+
+      if count >=2:
+         line = line.split(",")
+         try:
+            line[-1] = line[-1].strip("\n")
+            if  state1 not in itemList:
+               itemList.append(state1)
+            if inputt not in typeList:
+               typeList.append(inputt)
+            dictKey = (state1, inputt)
+            dictAns = tuple(line[2:])
+            turingDict[dictKey] = dictAns
+         except  IndexError:
+            pass
+      count+=1
+      
+         
+   randInt = 0
+   while randInt < buff:
+       s = "B"+s+"B"
+       randInt +=1
+   pos = buff
+   stringlist = []
    for letter in s:
-      try:
-         key = (state1, letter)
-      except KeyError:
-         print("!")
+      stringlist.append(letter)
+   try:
+      while initial != final:
+         loc= turingDict[{line,s[pos]}]
+         state = loc[0]
+         stringlist[pos] = loc[1]
+
+         if loc[2] == "L":
+            pos -=1
+         elif loc[2] == "R":
+            pos+=1
+   except KeyError:
+      print("!")
+       
          
-         
-         
+   if initial not in final:
+      print("Rejected!")
+   else:
+      print("Accepted")
+      finalString = ""
+
+      for lett in stringlist:
+         if lett != "B":
+            finalString = finalString+lett
+
+      print(finalString)
+  
+      
